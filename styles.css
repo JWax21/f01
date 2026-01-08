@@ -207,6 +207,11 @@ body {
   text-align: center;
 }
 
+.col-strategy {
+  min-width: 140px;
+  font-size: 0.9rem;
+}
+
 .col-data {
   min-width: 80px;
   font-family: var(--font-mono);

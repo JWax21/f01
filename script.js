@@ -1,10 +1,10 @@
 // Initial sample data
 let tableData = [
-  { id: 1, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
-  { id: 2, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
-  { id: 3, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
-  { id: 4, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
-  { id: 5, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
+  { id: 1, strategy: '', p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
+  { id: 2, strategy: '', p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
+  { id: 3, strategy: '', p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
+  { id: 4, strategy: '', p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
+  { id: 5, strategy: '', p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
 ];
 
 let nextId = 6;
@@ -42,6 +42,9 @@ function createTableRow(data, index) {
   
   tr.innerHTML = `
     <td class="col-id">${data.id}</td>
+    <td class="col-strategy">
+      <span class="cell-content" data-field="strategy">${escapeHtml(data.strategy)}</span>
+    </td>
     <td class="col-data">
       <span class="cell-content" data-field="p7">${escapeHtml(data.p7)}</span>
     </td>
@@ -207,6 +210,7 @@ function cancelEdit(cellContent) {
 function addNewRow() {
   const newRow = {
     id: nextId++,
+    strategy: '',
     p7: '',
     p30: '',
     col1: '',
@@ -227,9 +231,9 @@ function addNewRow() {
   // Scroll to the new row
   tr.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   
-  // Auto-start editing the p7 field
+  // Auto-start editing the strategy field
   setTimeout(() => {
-    const firstCell = tr.querySelector('[data-field="p7"]');
+    const firstCell = tr.querySelector('[data-field="strategy"]');
     if (firstCell) startEditing(firstCell);
   }, 350);
 }

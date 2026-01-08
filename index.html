@@ -1,64 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editable Table</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="container">
-    <header class="header">
-      <div class="header-content">
-        <h1>Data Editor</h1>
-        <p class="subtitle">Click any cell to edit • Press Enter to save • Escape to cancel</p>
-      </div>
-      <div class="actions">
-        <button class="btn btn-secondary" id="addRow">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-          Add Row
-        </button>
-        <button class="btn btn-primary" id="exportData">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          Export JSON
-        </button>
-      </div>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editable Table</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header-content">
+          <h1>Data Editor</h1>
+          <p class="subtitle">
+            Click any cell to edit • Press Enter to save • Escape to cancel
+          </p>
+        </div>
+        <div class="actions">
+          <button class="btn btn-secondary" id="addRow">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add Row
+          </button>
+          <button class="btn btn-primary" id="exportData">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Export JSON
+          </button>
+        </div>
+      </header>
 
-    <div class="table-wrapper">
-      <table class="data-table" id="dataTable">
-        <thead>
-          <tr>
-            <th class="col-id">#</th>
-            <th class="col-name">Name</th>
-            <th class="col-email">Email</th>
-            <th class="col-role">Role</th>
-            <th class="col-status">Status</th>
-            <th class="col-actions"></th>
-          </tr>
-        </thead>
-        <tbody id="tableBody">
-          <!-- Rows will be dynamically generated -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table class="data-table" id="dataTable">
+          <thead>
+            <tr>
+              <th class="col-id">#</th>
+              <th class="col-data">P7</th>
+              <th class="col-data">P30</th>
+              <th class="col-data">1</th>
+              <th class="col-data">2</th>
+              <th class="col-data">3</th>
+              <th class="col-data">4</th>
+              <th class="col-data">5</th>
+              <th class="col-data">6</th>
+              <th class="col-data">7</th>
+              <th class="col-actions"></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Rows will be dynamically generated -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="toast" id="toast">
+        <span class="toast-message"></span>
+      </div>
     </div>
 
-    <div class="toast" id="toast">
-      <span class="toast-message"></span>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
-

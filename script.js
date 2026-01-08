@@ -1,10 +1,10 @@
 // Initial sample data
 let tableData = [
-  { id: 1, name: 'Alex Chen', email: 'alex.chen@example.com', role: 'Developer', status: 'active' },
-  { id: 2, name: 'Sarah Miller', email: 'sarah.m@example.com', role: 'Designer', status: 'active' },
-  { id: 3, name: 'James Wilson', email: 'j.wilson@example.com', role: 'Manager', status: 'pending' },
-  { id: 4, name: 'Emma Davis', email: 'emma.d@example.com', role: 'Developer', status: 'active' },
-  { id: 5, name: 'Michael Brown', email: 'm.brown@example.com', role: 'Analyst', status: 'inactive' },
+  { id: 1, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
+  { id: 2, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
+  { id: 3, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
+  { id: 4, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
+  { id: 5, p7: '', p30: '', col1: '', col2: '', col3: '', col4: '', col5: '', col6: '', col7: '' },
 ];
 
 let nextId = 6;
@@ -42,19 +42,32 @@ function createTableRow(data, index) {
   
   tr.innerHTML = `
     <td class="col-id">${data.id}</td>
-    <td class="col-name">
-      <span class="cell-content" data-field="name">${escapeHtml(data.name)}</span>
+    <td class="col-data">
+      <span class="cell-content" data-field="p7">${escapeHtml(data.p7)}</span>
     </td>
-    <td class="col-email">
-      <span class="cell-content" data-field="email">${escapeHtml(data.email)}</span>
+    <td class="col-data">
+      <span class="cell-content" data-field="p30">${escapeHtml(data.p30)}</span>
     </td>
-    <td class="col-role">
-      <span class="cell-content" data-field="role">${escapeHtml(data.role)}</span>
+    <td class="col-data">
+      <span class="cell-content" data-field="col1">${escapeHtml(data.col1)}</span>
     </td>
-    <td class="col-status">
-      <span class="cell-content status-cell" data-field="status">
-        <span class="status-badge status-${data.status}">${data.status}</span>
-      </span>
+    <td class="col-data">
+      <span class="cell-content" data-field="col2">${escapeHtml(data.col2)}</span>
+    </td>
+    <td class="col-data">
+      <span class="cell-content" data-field="col3">${escapeHtml(data.col3)}</span>
+    </td>
+    <td class="col-data">
+      <span class="cell-content" data-field="col4">${escapeHtml(data.col4)}</span>
+    </td>
+    <td class="col-data">
+      <span class="cell-content" data-field="col5">${escapeHtml(data.col5)}</span>
+    </td>
+    <td class="col-data">
+      <span class="cell-content" data-field="col6">${escapeHtml(data.col6)}</span>
+    </td>
+    <td class="col-data">
+      <span class="cell-content" data-field="col7">${escapeHtml(data.col7)}</span>
     </td>
     <td class="col-actions">
       <button class="delete-btn" title="Delete row">
@@ -117,56 +130,33 @@ function startEditing(cellContent) {
   const td = cellContent.parentElement;
   td.classList.add('editing');
   
-  if (field === 'status') {
-    // Create select dropdown for status
-    const select = document.createElement('select');
-    select.className = 'cell-input';
-    select.innerHTML = `
-      <option value="active" ${currentValue === 'active' ? 'selected' : ''}>Active</option>
-      <option value="pending" ${currentValue === 'pending' ? 'selected' : ''}>Pending</option>
-      <option value="inactive" ${currentValue === 'inactive' ? 'selected' : ''}>Inactive</option>
-    `;
-    
-    cellContent.innerHTML = '';
-    cellContent.appendChild(select);
-    select.focus();
-    
-    select.addEventListener('change', () => saveEdit(cellContent, select.value));
-    select.addEventListener('blur', () => setTimeout(() => saveEdit(cellContent, select.value), 100));
-    select.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        cancelEdit(cellContent);
-      }
-    });
-  } else {
-    // Create text input
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'cell-input';
-    input.value = currentValue;
-    
-    cellContent.innerHTML = '';
-    cellContent.appendChild(input);
-    input.focus();
-    input.select();
-    
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
+  // Create text input
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'cell-input';
+  input.value = currentValue;
+  
+  cellContent.innerHTML = '';
+  cellContent.appendChild(input);
+  input.focus();
+  input.select();
+  
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      saveEdit(cellContent, input.value);
+    } else if (e.key === 'Escape') {
+      cancelEdit(cellContent);
+    }
+  });
+  
+  input.addEventListener('blur', () => {
+    // Small delay to check if we're clicking another cell
+    setTimeout(() => {
+      if (currentEditCell === cellContent) {
         saveEdit(cellContent, input.value);
-      } else if (e.key === 'Escape') {
-        cancelEdit(cellContent);
       }
-    });
-    
-    input.addEventListener('blur', () => {
-      // Small delay to check if we're clicking another cell
-      setTimeout(() => {
-        if (currentEditCell === cellContent) {
-          saveEdit(cellContent, input.value);
-        }
-      }, 100);
-    });
-  }
+    }, 100);
+  });
 }
 
 // Save the edited value
@@ -187,12 +177,7 @@ function saveEdit(cellContent, newValue) {
   
   // Update display
   td.classList.remove('editing');
-  
-  if (field === 'status') {
-    cellContent.innerHTML = `<span class="status-badge status-${rowData[field]}">${rowData[field]}</span>`;
-  } else {
-    cellContent.textContent = rowData[field];
-  }
+  cellContent.textContent = rowData[field];
   
   currentEditCell = null;
   
@@ -214,13 +199,7 @@ function cancelEdit(cellContent) {
   const td = cellContent.parentElement;
   
   td.classList.remove('editing');
-  
-  if (field === 'status') {
-    cellContent.innerHTML = `<span class="status-badge status-${rowData[field]}">${rowData[field]}</span>`;
-  } else {
-    cellContent.textContent = rowData[field];
-  }
-  
+  cellContent.textContent = rowData[field];
   currentEditCell = null;
 }
 
@@ -228,10 +207,15 @@ function cancelEdit(cellContent) {
 function addNewRow() {
   const newRow = {
     id: nextId++,
-    name: 'New User',
-    email: 'email@example.com',
-    role: 'Role',
-    status: 'pending'
+    p7: '',
+    p30: '',
+    col1: '',
+    col2: '',
+    col3: '',
+    col4: '',
+    col5: '',
+    col6: '',
+    col7: ''
   };
   
   tableData.push(newRow);
@@ -243,10 +227,10 @@ function addNewRow() {
   // Scroll to the new row
   tr.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   
-  // Auto-start editing the name field
+  // Auto-start editing the p7 field
   setTimeout(() => {
-    const nameCell = tr.querySelector('[data-field="name"]');
-    if (nameCell) startEditing(nameCell);
+    const firstCell = tr.querySelector('[data-field="p7"]');
+    if (firstCell) startEditing(firstCell);
   }, 350);
 }
 
